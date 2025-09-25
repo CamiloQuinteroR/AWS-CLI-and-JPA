@@ -123,3 +123,83 @@ target/gs-accessing-data-jpa-0.1.0.jar
 java -jar target/gs-accessing-data-jpa-0.1.0.jar
 ```
 
+
+# ☁️ Taller: Infrastructure as Code con AWS-CLI
+
+Este taller enseña a crear y administrar instancias EC2 en AWS usando AWS Command Line Interface (AWS-CLI).
+El objetivo es aplicar el concepto de Infraestructura como Código (IaC) para automatizar el despliegue y gestión de recursos en la nube.
+
+## 📌 Objetivos del Taller
+
+Configurar AWS CLI con credenciales de acceso.
+
+Crear un Key Pair para conexión segura.
+
+Definir un Security Group con reglas de seguridad.
+
+Lanzar una instancia EC2 (t2.micro).
+
+Conectarse vía SSH a la instancia.
+
+Listar instancias en ejecución.
+
+Eliminar los recursos creados (Key Pair, Security Group, Instancia).
+
+## ⚙️ Requisitos
+
+Cuenta AWS activa
+
+AWS CLI instalado
+
+Permisos para EC2
+
+Configuración inicial:
+
+aws configure
+
+🛠️ Pasos Resumidos
+
+Crear Key Pair:
+
+```
+aws ec2 create-key-pair --key-name MyKeyPair --query 'KeyMaterial' --output text > MyKeyPair.pem
+chmod 400 MyKeyPair.pem
+```
+
+Crear Security Group y agregar reglas (SSH y RDP):
+
+```
+aws ec2 create-security-group --group-name my-sg-cli --description "My security group" --vpc-id vpc-xxxxxxxx
+aws ec2 authorize-security-group-ingress --group-id sg-xxxx --protocol tcp --port 22 --cidr 0.0.0.0/0
+```
+
+Lanzar Instancia EC2:
+
+```
+aws ec2 run-instances --image-id ami-032930428bf1abbff --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids sg-xxxx --subnet-id subnet-xxxx
+```
+
+Conexión por SSH:
+
+```
+ssh -i "MyKeyPair.pem" ec2-user@ec2-xx-xxx-xxx-xx.compute-1.amazonaws.com
+```
+
+Listar Instancias:
+
+```
+aws ec2 describe-instances --filters "Name=instance-type,Values=t2.micro"
+```
+
+Eliminar Recursos:
+
+```
+aws ec2 terminate-instances --instance-ids i-xxxx
+aws ec2 delete-key-pair --key-name MyKeyPair
+aws ec2 delete-security-group --group-id sg-xxxx
+```
+
+
+
+
+
