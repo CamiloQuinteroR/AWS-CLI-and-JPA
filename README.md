@@ -30,16 +30,6 @@ El proyecto incluye las siguientes dependencias principales:
 
 ---
 
-## 📂 Estructura del Proyecto
-
-src/
-└─ main/java/com/example/accessingdatajpa/
-├─ Customer.java # Entidad JPA
-├─ CustomerRepository.java # Repositorio JPA
-├─ AccessingDataJpaApplication.java # Clase principal con CommandLineRunner
-
----
-
 ## 🧩 Componentes Implementados
 
 ### 1. **Entidad Customer**
